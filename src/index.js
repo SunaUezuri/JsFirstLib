@@ -6,36 +6,26 @@ const link = path[2];
 console.log(`Reading file from path: ${link}`);
 
 fs.readFile(link, 'utf-8', (err, data) => {
-    breakByParagraphs(data);
-    // verifyDoubledWords(data);
+    if (err) {
+        console.error(`Error reading file from path: ${link}`, err.code);
+        return;
+    }
+    countWords(data);
 });
 
-/*
-    - Create a word arrays [X]
-    - Count the repeated words [X]
-    - Create a object with the result [X]
-    - Make a function to count by paragraphs [X]
-    - Remove case sensitivity [X]
-    - Remove special characters [X]
-    - Ignore words with less than 3 characters [X]
-    - Ignore empty lines/string [X]
-    - Print the result [X]
+function countWords(data) {
+    const paragraphs = receiveParagraphs(data);
 
-    {
-        "web": 5,
-        "development": 3
-    }
-*/
-
-function breakByParagraphs(data) {
-    const paragraphs = data.toLowerCase().split('\n'); // Split by new line and ignore case
     const count = paragraphs
     .flatMap(p => {
         if (!p) return [];
         return verifyDoubledWords(p)
     });
-    
     console.log(count);
+}
+
+function receiveParagraphs(data) {
+    return paragraphs = data.toLowerCase().split('\n'); // Split by new line and ignore case
 }
 
 function removeSpecialCharacters(word) {
