@@ -14,7 +14,9 @@ fs.readFile(link, 'utf-8', (err, data) => {
     - Create a word arrays [X]
     - Count the repeated words [X]
     - Create a object with the result [X]
-    - Make a function to count by paragraphs []
+    - Make a function to count by paragraphs [X]
+    - Remove case sensitivity [X]
+    - Remove special characters [ ]
     - Print the result [X]
 
     {
@@ -31,12 +33,19 @@ function breakByParagraphs(data) {
     console.log(count);
 }
 
+function removeSpecialCharacters(word) {
+    return word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+}
+
 function verifyDoubledWords(data) {
     const wordArrays = data.split(' ');
     const result = {};
 
     wordArrays.forEach(word => {
-        result[word] = (result[word] || 0) + 1;
+        if (word.length >= 3){
+            word = removeSpecialCharacters(word);
+            result[word] = (result[word] || 0) + 1;
+        }
     });
 
     return result;
