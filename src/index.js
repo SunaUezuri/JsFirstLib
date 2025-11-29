@@ -18,7 +18,7 @@ fs.readFile(link, 'utf-8', (err, data) => {
     - Remove case sensitivity [X]
     - Remove special characters [X]
     - Ignore words with less than 3 characters [X]
-    - Ignore empty lines/string []
+    - Ignore empty lines/string [X]
     - Print the result [X]
 
     {
@@ -30,8 +30,11 @@ fs.readFile(link, 'utf-8', (err, data) => {
 function breakByParagraphs(data) {
     const paragraphs = data.toLowerCase().split('\n'); // Split by new line and ignore case
     const count = paragraphs
-    .filter((p) => p)
-    .map(p => { return verifyDoubledWords(p); });
+    .flatMap(p => {
+        if (!p) return [];
+        return verifyDoubledWords(p)
+    });
+    
     console.log(count);
 }
 
