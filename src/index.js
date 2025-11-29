@@ -6,19 +6,30 @@ const link = path[2];
 console.log(`Reading file from path: ${link}`);
 
 fs.readFile(link, 'utf-8', (err, data) => {
-    verifyDoubledWords(data);
+    breakByParagraphs(data);
+    // verifyDoubledWords(data);
 });
 
 /*
     - Create a word arrays [X]
-    - Count the repeated words []
-    - Create a object with the result []
+    - Count the repeated words [X]
+    - Create a object with the result [X]
+    - Make a function to count by paragraphs []
+    - Print the result [X]
 
     {
         "web": 5,
         "development": 3
     }
 */
+
+function breakByParagraphs(data) {
+    const paragraphs = data.toLowerCase().split('\n'); // Split by new line and ignore case
+    const count = paragraphs.map(p => {
+        return verifyDoubledWords(p);
+    });
+    console.log(count);
+}
 
 function verifyDoubledWords(data) {
     const wordArrays = data.split(' ');
@@ -28,5 +39,5 @@ function verifyDoubledWords(data) {
         result[word] = (result[word] || 0) + 1;
     });
 
-    console.log(result);
+    return result;
 }
